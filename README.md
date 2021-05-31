@@ -3,7 +3,7 @@
 Software and resources for the Teensy R4ge Pro custom badge. See documents folder for schematic.  
 </p>
 
-![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/Teensy-R4ge-Pro-PCB-3D.jpg)
+![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/Teensy-R4ge-Pro-PCB-3D.png)
 
 <h3>Key Components/Requirements</h3>
 <p>
