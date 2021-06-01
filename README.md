@@ -25,6 +25,12 @@ Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with f
 - See BOM file in the documents folder for full list of components.<br>
 - STL file for printing a simple case also included in the documents folder.<br>
 </p>
+
+<p>
+  Runs Doom and the other MCUME emulators by Jean MarcHarvengt.    https://github.com/Jean-MarcHarvengt/MCUME
+  Requires minor config and IO pin mapping changes.  
+</p>
+
 <h3>App Descriptions</h3>
 <p>
 - Test:   Exercises all the hardware on the board to verify operation and calibration.
