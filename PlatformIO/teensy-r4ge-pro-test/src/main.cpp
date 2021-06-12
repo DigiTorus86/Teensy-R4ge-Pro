@@ -2,8 +2,11 @@
 Teensy R4ge Pro test app to verify hardware functionality
 
 Requires:
- - Teensy R4ge Pro
+ - Teensy R4ge Pro v2
  - Teensy 4.1 board
+
+ Optional: 
+ - Audio source and 3.5mm phone cable to test audio in features 
  
 Copyright (c) 2021 Paul Pagel
 This is free software; see the license.txt file for more information.
@@ -17,7 +20,7 @@ There is no warranty; not even for merchantability or fitness for a particular p
 #include <Audio.h>
 #include <Encoder.h>
 #include "teensy_r4ge_pro.h"
-#include "icons.h"	
+#include "icons.h"  
 #include "r4ge_pro_title.h"
 
 void drawSD(bool present);
@@ -34,7 +37,7 @@ void drawSD(bool present);
 bool btn_pressed[8], btn_released[8];
 bool btnA_pressed, btnB_pressed, btnX_pressed, btnY_pressed;
 bool btnUp_pressed, btnDown_pressed, btnLeft_pressed, btnRight_pressed;
-bool spkrLeft_on, spkrRight_on;
+bool spkrLeft_on, spkrRight_on, audioIn_active;
 bool btnTouch_pressed, btnTouch_released;
 bool joy_left_pressed, knob_pressed;
 int16_t joy_left_x, joy_left_y, joy_right_x, joy_right_y; 
@@ -48,17 +51,45 @@ Sd2Card card;
 SdVolume volume;
 SdFile root;
 
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
 // GUItool: begin automatically generated code
-AudioSynthWaveformSine   sine1;          //xy=93,649
-AudioSynthWaveformSine   sine2;          //xy=93,711
-AudioAmplifier           amp1;           //xy=235,647
-AudioAmplifier           amp2;           //xy=238,711
-AudioOutputI2S           i2s1;           //xy=391,651
-AudioConnection          patchCord1(sine1, amp1);
-AudioConnection          patchCord2(sine2, amp2);
-AudioConnection          patchCord3(amp1, 0, i2s1, 0);
-AudioConnection          patchCord4(amp2, 0, i2s1, 1);
+AudioInputI2S            i2s1;           //xy=288.23333740234375,238.2333526611328
+AudioSynthWaveform       waveform2;      //xy=296.23333740234375,294.23333740234375
+AudioSynthWaveform       waveform1;      //xy=299.23333740234375,173.23333740234375
+AudioMixer4              mixer2;         //xy=454.23333740234375,283.23333740234375
+AudioMixer4              mixer1;         //xy=455.23333740234375,192.23333740234375
+AudioAnalyzePeak         peak1;          //xy=605.2333374023438,179.23333740234375
+AudioOutputI2S           i2s2;           //xy=606.2333374023438,238.23333740234375
+AudioAnalyzePeak         peak2;          //xy=606.2333374023438,293.23333740234375
+AudioConnection          patchCord1(i2s1, 0, mixer1, 1);
+AudioConnection          patchCord2(i2s1, 1, mixer2, 1);
+AudioConnection          patchCord3(waveform2, 0, mixer2, 0);
+AudioConnection          patchCord4(waveform1, 0, mixer1, 0);
+AudioConnection          patchCord5(mixer2, 0, i2s2, 1);
+AudioConnection          patchCord6(mixer2, peak2);
+AudioConnection          patchCord7(mixer1, 0, i2s2, 0);
+AudioConnection          patchCord8(mixer1, peak1);
 // GUItool: end automatically generated code
+
+
 
 bool initSD();
 void playAudio(bool play_right, bool play_left);
@@ -141,16 +172,17 @@ void setup()
   drawSD(sd_present);
 
   Serial.print(F("Setting up the audio....")); 
-  AudioMemory(4);
+  AudioMemory(16);  // allocate memory blocks for the Teensy audio engine
   AudioNoInterrupts();
-  sine1.frequency(440);
-  sine1.amplitude(0.5);
-  sine2.frequency(880);
-  sine2.amplitude(0.5);
+
+  mixer1.gain(0, 0.25f); // generally don't want total gain for a mixer to exceed 1.0
+  mixer2.gain(0, 0.25f);
+  mixer1.gain(1, 0.0f); 
+  mixer2.gain(1, 0.0f);
+
   AudioInterrupts();
   delay(100);
-  amp1.gain(0);
-  amp2.gain(0);
+  
   Serial.println("done."); 
 }
 
@@ -160,29 +192,32 @@ void setup()
 bool initSD()
 {
   // See SDFat/src/SdCard/SdInfo.h for list of error codes
-  bool sd_ok = false;
 
   digitalWrite(TFT_CS, HIGH); // disable TFT
   digitalWrite(TCH_CS, HIGH); // disable Touchscreen - otherwise SD.begin() will fail!
 
-  Serial.print("\nInitializing SD card...");
+  Serial.print("Initializing SD card...");
 
-  // we'll use the initialization code from the utility libraries
+  // We'll use the initialization code from the utility libraries
   // since we're just testing if the card is working!
-  if (!card.init(SPI_HALF_SPEED, BUILTIN_SDCARD)) {
+  if (!card.init(SPI_HALF_SPEED, BUILTIN_SDCARD)) 
+  {
     Serial.println("initialization failed. Things to check:");
     Serial.println("* is a card inserted?");
     Serial.println("* is your wiring correct?");
     Serial.println("* did you change the chipSelect pin to match your shield or module?");
-    while (1);
-  } else {
+    return false;
+  } 
+  else 
+  {
     Serial.println("Wiring is correct and a card is present.");
   }
 
-  // print the type of card
+  // Print the type of card
   Serial.println();
   Serial.print("Card type:         ");
-  switch (card.type()) {
+  switch (card.type()) 
+  {
     case SD_CARD_TYPE_SD1:
       Serial.println("SD1");
       break;
@@ -198,7 +233,8 @@ bool initSD()
 
   
   // Now we will try to open the 'volume'/'partition' - it should be FAT16 or FAT32
-  if (!volume.init(card)) {
+  if (!volume.init(card)) 
+  {
     Serial.println("Could not find FAT16/FAT32 partition.\nMake sure you've formatted the card");
     return false;
   }
@@ -234,35 +270,112 @@ bool initSD()
   // list all files in the card with date and size
   root.ls(LS_R | LS_DATE | LS_SIZE);
  
-  return true;
+  return true; // card is present and checks out
 }
-
-
-
+ 
 /* 
- * Plays the audio sample through either or both speaker channels.  
+ * Plays a waveform through either or both speakers.  
  */
-void playAudio(bool play_right, bool play_left)
+void playAudio(bool play_left, bool play_right)
 { 
-	if (play_left)
+  static bool left_playing, right_playing;
+
+  if (play_left == left_playing && play_right == right_playing)
   {
-    amp1.gain(1);
+    // No status change, so avoid making unneeded audio engine calls
+    // which can generate unwanted audio artifacts and noise.
+    return; 
+  }
+
+  if (play_left)
+  {
+    waveform1.begin(0.5f, 880, WAVEFORM_SINE);  // 880Hz = A5
   }
   else
   {
-    amp1.gain(0);
+    waveform1.amplitude(0); // silence
   }
 
   if (play_right)
   {
-    amp2.gain(1);
+    waveform2.begin(0.5f, 1760, WAVEFORM_SINE);  // 1760Hz = A6
   }
   else
   {
-    amp2.gain(0);
+    waveform2.amplitude(0);  // silence
   }
+
+  left_playing = play_left;
+  right_playing = play_right;
 }
 
+/* 
+ * Plays the stereo audio in by toggling the mixer channel volume.
+ */
+void playAudioIn(bool play_in)
+{
+  static bool audio_playing;
+
+  if (play_in == audio_playing)
+  {
+    // No status change, so avoid making unneeded audio engine calls
+    // which can generate unwanted audio artifacts and noise.
+    return;
+  }
+
+  if (play_in)
+  {
+    mixer1.gain(1, 0.75f);
+    mixer2.gain(1, 0.75f);
+  }
+  else
+  {
+    mixer1.gain(1, 0);
+    mixer2.gain(1, 0);
+  }
+
+  audio_playing = play_in;
+}
+
+
+/* 
+ * Checks the left and right audio peaks and 
+ * draws VU meter audio level bars.
+ */
+void checkAudioPeaks()
+{
+  if (peak1.available() && peak2.available()) 
+  {
+    uint16_t left_peak = peak1.read() * 600.0;
+    uint16_t right_peak = peak2.read() * 600.0;
+    uint16_t left_color = ILI9341_GREEN;
+    uint16_t right_color = ILI9341_GREEN;
+
+    if (left_peak > 270)
+    {
+      left_color = ILI9341_RED;
+    }
+    else if (left_peak > 220)
+    {
+      left_color = ILI9341_YELLOW;
+    }
+
+    if (right_peak > 270)
+    {
+      right_color = ILI9341_RED;
+    }
+    else if (left_peak > 220)
+    {
+      right_color = ILI9341_YELLOW;
+    }
+
+    tft.drawFastHLine(0, 186, 320, ILI9341_BLACK);
+    tft.drawFastHLine(0, 186, left_peak, left_color);
+
+    tft.drawFastHLine(0, 190, 320, ILI9341_BLACK);
+    tft.drawFastHLine(0, 190, right_peak, right_color);
+  }
+}
 
 /*
  * Draws the SD card status icon indicating if the card is present or not.
@@ -349,7 +462,7 @@ void updateScreen()
   setTextColor(ILI9341_CYAN, btnTouch_pressed); 
   tft.print("TOUCH");
 
-  // joysticks / rage cons
+  // joysticks / rage cons / rotary controller
   setTextColor(ILI9341_ORANGE, joy_left_pressed);
   tft.setCursor(28, 125);
   tft.print("X:");
@@ -366,10 +479,24 @@ void updateScreen()
   tft.print("V:");
   tft.print(knob_value);
   tft.print("  ");
+
+  // Audio in 
+  if (btnUp_pressed)
+  {
+    audioIn_active = true;
+  }
+  else if (btnDown_pressed)
+  {
+    audioIn_active = false;
+  }
+
+  setTextColor(ILI9341_ORANGE, audioIn_active);  
+  tft.setCursor(24, 196);
+  tft.print("Audio IN");
 }
 
 /*
- * Check button presses connected to the shift register
+ * Check the status of the control buttons.
  */
 void checkButtonPresses()
 {
@@ -470,6 +597,10 @@ void loop(void)
   checkEncoder();
   
   updateScreen();
+
   playAudio(btnLeft_pressed, btnRight_pressed);
-  delay(10);
+  playAudioIn(audioIn_active);
+  checkAudioPeaks();
+
+  delay(50);
 }
