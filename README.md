@@ -11,7 +11,7 @@ Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with f
 
 <h3>Key Components/Requirements</h3>
 <p>
-- Custom PCB, bread board, or protoboard.<br>
+- Custom PCB, bread board, or protoboard.  See the gerbers folder or order from https://www.pcbway.com/project/shareproject/Teensy_4_1_R4ge_Pro_Mobile_Platform.html <br>
 - Teensy 4.1<br>
 - ILI9341 320x240 TFT with touch screen<br>
 - Analog joystick<br>
