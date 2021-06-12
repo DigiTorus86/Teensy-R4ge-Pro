@@ -7,7 +7,7 @@ Software and resources for the Teensy R4ge Pro custom badge. See documents folde
 Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with flexible controls, a large display, CD-quality sound input and output.  Runs a variety of emulators for a retro-tastic mobile arcade experience.  Works as a high-fidelity sound generating and processing platform.  Includes a 10dB booster circuit with gain control, suitable for applying digital effects to a variety of audio input sources - including electric guitars.  
 </p>
 
-![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/Teensy-R4ge-Pro-PCB-3D.png)
+![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/teensy-r4ge-pro-test.png)
 
 <h3>Key Components/Requirements</h3>
 <p>
@@ -34,3 +34,6 @@ Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with f
 <h3>App Descriptions</h3>
 <p>
 - Test:   Exercises all the hardware on the board to verify operation and calibration.
+</p>
+
+![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/Teensy-R4ge-Pro-PCB-3D.png)
