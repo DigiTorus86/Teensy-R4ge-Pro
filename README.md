@@ -33,7 +33,8 @@ Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with f
 
 <h3>App Descriptions</h3>
 <p>
-- Test:   Exercises all the hardware on the board to verify operation and calibration.
+  - Test:   Exercises all the hardware on the board to verify operation and calibration.
+  - Synth:  A graphical 4-operator/4-voice FM synth, playable via on-screen keyboard + stylus, 8 step sequencer, or MIDI input on the RX8 pin.
 </p>
 
 ![alt text](https://raw.githubusercontent.com/DigiTorus86/Teensy-R4ge-Pro/master/images/Teensy-R4ge-Pro-PCB-3D.png)
