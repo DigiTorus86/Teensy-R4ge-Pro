@@ -1,6 +1,6 @@
 /***************************************************
 * "Tombstone City: 21st Century" game
-* An emulation of the classic TI-994/A game by John Plaster for Texas Instruments 
+* An emulation of the classic TI-99/4A game by John Plaster for Texas Instruments 
 * *
 * Requires:
 * - Teensy R4ge Pro v2

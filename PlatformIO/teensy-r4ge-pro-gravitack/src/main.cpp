@@ -392,16 +392,21 @@ void drawGameOver()
   game_state = STATE_GAME_OVER;
 }
 
+/*
+ * Draws the wipe effect used when moving to the next level
+ */
 void wipeGameArea()
 {
   playWarpSound();
   for (int i = 0; i <= 110; i++)
   {
     tft.drawRect(110 - i, 130 - i, i * 2 + 100, i * 2, ILI9341_WHITE);
+    delay(10);
   }
   for (int i = 0; i <= 110; i++)
   {
     tft.drawRect(110 - i, 130 - i, i * 2 + 100, i * 2, ILI9341_BLACK);
+    delay(10);
   }
 }
 
@@ -1285,7 +1290,7 @@ void advanceLevel()
 
   for (int i = player_fuel; i >= 0; i--)
   {
-    // play tick sound
+    playTickSound();
     changePlayerScore(10);
     changePlayerFuel(-1);
   }
