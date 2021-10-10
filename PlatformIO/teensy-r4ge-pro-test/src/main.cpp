@@ -8,6 +8,20 @@ Requires:
  Optional: 
  - Audio source and 3.5mm phone cable to test audio in features 
  
+ Controls:
+ - On-screen control indicators should be highlighted when corresponding control is pressed.
+ - Joystick should be centered somewhere between 124 and 132, with a range of 0 to 255.
+ - Pushing down on joystick from top should activate joystick button.
+ - Rotary encoder value should increase clockwise, decrease counter-clockwise.
+ - Pushing down on encoder from top should activate the encoder button.
+ - LEFT: play tone through left Audio Out and VU meter should show signal input strength.
+ - RIGHT: play tone through right Audio Out + VU meter.
+ - UP: turn Audio In throughput to Audio Out on + VU meter.
+ - DOWN: turn Audio In throughput off.
+ - Touching anywhere on screen should display X,Y coordinates in lower left.
+ - If an SD card is NOT detected, a red line will be displayed over the SD icon.
+ - If a PSRAM chip was detected, the size will be displayed (usually 8MB).
+
 Copyright (c) 2021 Paul Pagel
 This is free software; see the license.txt file for more information.
 There is no warranty; not even for merchantability or fitness for a particular purpose.
@@ -20,10 +34,8 @@ There is no warranty; not even for merchantability or fitness for a particular p
 #include <Audio.h>
 #include <Encoder.h>
 #include "teensy_r4ge_pro.h"
-#include "icons.h"  
+#include "icons.h"	
 #include "r4ge_pro_title.h"
-
-void drawSD(bool present);
 
 // Touch screen coordinates for the touch button
 #define TOUCH_X1    3333
@@ -33,6 +45,8 @@ void drawSD(bool present);
 
 #define TOP_LINE      35
 #define BOTTOM_LINE  180  
+
+extern "C" uint8_t external_psram_size;
 
 bool btn_pressed[8], btn_released[8];
 bool btnA_pressed, btnB_pressed, btnX_pressed, btnY_pressed;
@@ -51,25 +65,7 @@ Sd2Card card;
 SdVolume volume;
 SdFile root;
 
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
+// See:  https://www.pjrc.com/teensy/gui/
 // GUItool: begin automatically generated code
 AudioInputI2S            i2s1;           //xy=288.23333740234375,238.2333526611328
 AudioSynthWaveform       waveform2;      //xy=296.23333740234375,294.23333740234375
@@ -88,7 +84,6 @@ AudioConnection          patchCord6(mixer2, peak2);
 AudioConnection          patchCord7(mixer1, 0, i2s2, 0);
 AudioConnection          patchCord8(mixer1, peak1);
 // GUItool: end automatically generated code
-
 
 
 bool initSD();
@@ -171,6 +166,14 @@ void setup()
   bool sd_present = initSD();
   drawSD(sd_present);
 
+  uint8_t ram_size = external_psram_size;
+  tft.setTextColor(ILI9341_LIGHTGREY);  
+  tft.setCursor(250, 125);
+  tft.print("PSRAM");
+  tft.setCursor(250, 145);
+  tft.print(ram_size);
+  tft.print(" MB");
+
   Serial.print(F("Setting up the audio....")); 
   AudioMemory(16);  // allocate memory blocks for the Teensy audio engine
   AudioNoInterrupts();
@@ -187,7 +190,7 @@ void setup()
 }
 
 /*
- * Initialize the SD file system before trying using a reader or writer
+ * Initialize the SD file system before trying to use a reader or writer
  */
 bool initSD()
 {
@@ -287,7 +290,7 @@ void playAudio(bool play_left, bool play_right)
     return; 
   }
 
-  if (play_left)
+	if (play_left)
   {
     waveform1.begin(0.5f, 880, WAVEFORM_SINE);  // 880Hz = A5
   }
@@ -336,7 +339,6 @@ void playAudioIn(bool play_in)
 
   audio_playing = play_in;
 }
-
 
 /* 
  * Checks the left and right audio peaks and 
