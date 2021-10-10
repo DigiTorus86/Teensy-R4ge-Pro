@@ -34,7 +34,7 @@ Harness the power of the 600MHz ARM Cortex M-7 that powers the Teensy 4.1 with f
 <h3>App Descriptions</h3>
 <p>
   - Test:   Exercises all the hardware on the board to verify operation and calibration. <br/>
-  - Gravitack: Gravitack: Classic space shooter. (Port from original ESP32 Conference Badge)  <br/>
+  - Gravitack: Classic vector space shooter. (Port from original ESP32 Conference Badge)  <br/>
   - Tombstone: Port of the classic TI-99/4A game.  <br/>
   - Synth:  A graphical 4-operator/4-voice FM synth, playable via on-screen keyboard + stylus, 8 step sequencer, or MIDI input on the RX8 pin.<br/>
 </p>
