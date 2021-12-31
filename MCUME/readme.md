@@ -9,8 +9,11 @@
 6. Load the sketch for the emulator you want to run into the Arduino IDE.
 7. Select Tools->Optimize and choose the appropriate option based on the emulator.
   a.  Doom:  Faster
+  
   b.  Castaway/Atari ST:  Smallest Code
+  
   c.  NES/Nofrendo:  Faster
+  
   d.  UAE/Amiga:  Smallest Code
   
 8. Compile and load the sketch to the Teensy.  If it works, you should see the game/emulator screen and be able to select from the list of detected ROMs that you loaded to the microSD. 
