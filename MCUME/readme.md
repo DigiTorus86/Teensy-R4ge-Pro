@@ -11,11 +11,13 @@
   a.  Doom:  Faster
   b.  Castaway/Atari ST:  Smallest Code
   c.  NES/Nofrendo:  Faster
+  d.  UAE/Amiga:  Smallest Code
+  
 8. Compile and load the sketch to the Teensy.  If it works, you should see the game/emulator screen and be able to select from the list of detected ROMs that you loaded to the microSD. 
 
 ## Troubleshooting
 - If compilation fails and exceeds available memory, try optimizing for Smallest Code
-- If compiling on Linux, may need to fix some include file capitalization errors in MCUME (i.e. in tft_t_dma.cpp).
+- If compiling on Mac or Linux, may need to fix some include file capitalization errors in MCUME (i.e. in tft_t_dma.cpp).
 - Verify that the PSRAM is installed and working using the Teensy example sketch
 - Hookup a keyboard to the Teensy USB pins and try different keypresses if screen appears frozen
 - Try loading different ROMs.  Quite a few of the tested ROMs failed to work.
