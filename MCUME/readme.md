@@ -23,32 +23,35 @@
 - Try loading different ROMs.  Quite a few of the tested ROMs failed to work.
 - Try the latest code from the MCUME repo or the included emulator code in this repo.
 
-##Teensy R4ge Pro GPIO Pin Assignments
-TFT_DC     9  // Data (high)/Command (low) pin
-TFT_CS    10  // SPI Chip Select pin for screen (active low)
-TFT_RST  255  // Reset pin NOT USED, connected to 3V3 (always high)
-TFT_MISO  12  // SPI Master In Slave Out       
-TFT_MOSI  11  // SPI Master Out Slave In         
-TFT_CLK   13  // SPI Clock
-TFT_LED  255  // TFT LED brightness control, connected to 3V3
-TCH_CS    37  // SPI Touch controller Chip Select (active low)
-SD_CS     BUILTIN_SDCARD  // (254) SPI SD card reader Chip Select pin 
+## Teensy R4ge Pro GPIO Pin Assignments
 
-JOYX_L    16  // Left analog joystick X axis
-JOYY_L    17  // Left analog joystick Y axis
-JBTN_L    25  // Left joystick button 
+Full list of GIP pin assignments can be found in the ```teensy_r4ge_pro.h``` file in the Arduino IDE test sketch or any of the PlatformIO ```include``` folders.
 
-ENC_BTN  24  // Rotary encoder button/switch
+- TFT_DC     9  // Data (high)/Command (low) pin
+- TFT_CS    10  // SPI Chip Select pin for screen (active low)
+- TFT_RST  255  // Reset pin NOT USED, connected to 3V3 (always high)
+- TFT_MISO  12  // SPI Master In Slave Out
+- TFT_MOSI  11  // SPI Master Out Slave In
+- TFT_CLK   13  // SPI Clock
+- TFT_LED  255  // TFT LED brightness control, connected to 3V3
+- TCH_CS    37  // SPI Touch controller Chip Select (active low)
+- SD_CS     BUILTIN_SDCARD  // (254) SPI SD card reader Chip Select pin
 
-BTN_Y     5 
-BTN_X     4  
-BTN_B     3 
-BTN_A     2 
-BTN_RIGHT 32 
-BTN_LEFT  31 
-BTN_DOWN  30
-BTN_UP    29 
+- JOYX_L    16  // Left analog joystick X axis
+- JOYY_L    17  // Left analog joystick Y axis
+- JBTN_L    25  // Left joystick button
+
+- ENC_BTN  24  // Rotary encoder button/switch
+
+- BTN_Y     5
+- BTN_X     4
+- BTN_B     3
+- BTN_A     2
+- BTN_RIGHT 32
+- BTN_LEFT  31
+- BTN_DOWN  30
+- BTN_UP    29
 
 Teensy 4.1 I2C Pins 
-      SDA       18
-      SCL       19
+- SDA       18
+- SCL       19
