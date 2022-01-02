@@ -24,6 +24,9 @@
 - Try the latest code from the MCUME repo or the included emulator code in this repo.
 
 ## Teensy R4ge Pro GPIO Pin Assignments
+
+Full list of GIP pin assignments can be found in the ```teensy_r4ge_pro.h``` file in the Arduino IDE test sketch or any of the PlatformIO ```include``` folders.
+
 - TFT_DC     9  // Data (high)/Command (low) pin
 - TFT_CS    10  // SPI Chip Select pin for screen (active low)
 - TFT_RST  255  // Reset pin NOT USED, connected to 3V3 (always high)
