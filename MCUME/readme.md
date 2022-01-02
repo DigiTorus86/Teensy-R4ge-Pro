@@ -23,7 +23,7 @@
 - Try loading different ROMs.  Quite a few of the tested ROMs failed to work.
 - Try the latest code from the MCUME repo or the included emulator code in this repo.
 
-##Teensy R4ge Pro GPIO Pin Assignments
+## Teensy R4ge Pro GPIO Pin Assignments
 - TFT_DC     9  // Data (high)/Command (low) pin
 - TFT_CS    10  // SPI Chip Select pin for screen (active low)
 - TFT_RST  255  // Reset pin NOT USED, connected to 3V3 (always high)
