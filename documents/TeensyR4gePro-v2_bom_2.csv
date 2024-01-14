@@ -1,0 +1,43 @@
+Component,Description,Part,References,Value,Footprint,Quantity Per PCB,Datasheet
+1,Single-cell battery,Battery_Cell,BT1,CR18650,BatteryHolder_MPD_BH-18650-PC2-no-holes,1,~
+2,"Unpolarized capacitor, small symbol",C_Small,C1 C2,100nF,C_Disc_D5.0mm_W2.5mm_P5.00mm,2,~
+3,"Polarized capacitor, small symbol",CP_Small,C3 C4 C5 C6,10uF,CP_Radial_D5.0mm_P2.50mm,4,~
+4,Unpolarized capacitor,C,C7,22pF,C_Disc_D3.0mm_W1.6mm_P2.50mm,1,~
+5,"Audio Jack, 3 Poles (Stereo / TRS)",AudioJack3,J3,AudioJack3,STX35013N,1,~
+6,"Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)",Conn_01x02_Male,J2,Conn_01x02,PinHeader_1x02_P2.54mm_Vertical,1,~
+7,"Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)",Conn_01x06_Male,J1,Conn_01x06_Male,PinHeader_1x06_P2.54mm_Vertical,1,~
+8,Speaker,Speaker,LS1 LS2,Speaker,Speaker_Visaton_K14.25_8_ohm,2,~
+9,Resistor,R,R9 R10,100K,R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,2,~
+10,Resistor,R,R1 R2 R13 R14 R15 R16,10K,R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,6,~
+11,Resistor,R,R3 R4,1M,R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,2,~
+12,Resistor,R,R11 R12,220K,R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,2,~
+13,Resistor,R,R5 R6 R7 R8,2M2,R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,4,~
+14,,R_POT_Dual-MyMCU_Espressif,RV2,1OK_Dual,Potentiometer_10K_Dual_Uxcell,1,~
+15,,R_POT_Dual-MyMCU_Espressif,RV1,R_POT_Dual,Potentiometer_10K_Dual_Uxcell,1,~
+16,"Rotary encoder, dual channel, incremental quadrate outputs, with switch",Rotary_Encoder_Switch,SW10,Rotary_Encoder_Switch,RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm,1,~
+17,"Push button switch, generic, two pins",SW_Push,SW2 SW3 SW4 SW5 SW6 SW7 SW8 SW9,SW_Push,SW_PUSH_6mm,8,~
+18,,Switch_DP3T,SW1,Switch_DP3T,Switch_DP3T_CK_OS203011MS1QP1,1,
+19,,ILI9341-2.8in-Touchscreen-TFT-MyMCU_Espressif,U2,ILI9341-2.8in-Touchscreen-TFT,ILI9341_2.8_TFT_TOUCH_SD_SPI,1,http://pan.baidu.com/s/11Y990
+20,,PAM8403_BREAKOUT-MyMCU_Espressif,U6,PAM8403_BREAKOUT,PAM8403_Breakout_HW104,1,
+21,,PCM1802-ADC-stereo-breakout,U3,PCM1802-ADC-stereo-breakout,PCM1802-ADC-breakout,1,
+22,,PCM5102A_HILETGO_BREAKOUT-MyMCU_Espressif,U5,PCM5102A_HILETGO_BREAKOUT,PCM5102A_Hiletgo_Breakout,1,
+23,"Dual Low-Noise JFET-Input Operational Amplifiers, DIP-8/SOIC-8",TL072,U4,TL072,DIP-8_W7.62mm,1,http://www.ti.com/lit/ds/symlink/tl071.pdf
+24,,TP4056_5V_Li_Battery_Charger,U9,TP4056_5V_Li_Battery_Charger,TP4056_Li_Battery_Charger_Breakout,1,
+25,,Teensy4.1,U1,Teensy4.1,Teensy41,1,
+26,,XBox360_Analog_Joystick-MyMCU_Espressif,U7,XBox360_Analog_Joystick,XBox360_Analog_Joystick,1,
+
+
+
+
+
+Component Groups:,26
+Component Count:,49
+Fitted Components:,49
+Number of PCBs:,1
+Total components:,49
+Schematic Version:,2
+Schematic Date:,2021-05-09
+PCB Variant:,[u'default']
+BoM Date:,Sun 16 May 2021 08:42:20 AM EDT
+Schematic Source:,/home/digitorus/KiCad/Teensy41_R4ge_Pro_Encoder/TeensyR4gePro-v1/TeensyR4gePro-v2.sch
+KiCad Version:,Eeschema 5.1.9-73d0e3b20d~88~ubuntu20.04.1

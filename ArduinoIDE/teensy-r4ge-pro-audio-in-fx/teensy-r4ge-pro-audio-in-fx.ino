@@ -35,10 +35,12 @@ AudioConnection          patchCord4(reverb1, 0, i2s_out, 0);
 void setup() 
 {
  AudioMemory(40);
+ AudioNoInterrupts();
 
  reverb1.reverbTime(0.5); // in seconds
  reverb2.reverbTime(0.5);
- 
+
+ AudioInterrupts();
 }
 
 void loop() 
